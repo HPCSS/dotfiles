@@ -1,0 +1,65 @@
+"------------------------------------
+" neocomplecache.vim
+"------------------------------------
+" AutoComplPopを無効にする
+let g:acp_enableAtStartup = 0
+" NeoComplCacheを有効にする
+let g:neocomplcache_enable_at_startup = 1
+" 補完が自動で開始される文字数
+let g:neocomplcache_auto_completion_start_length = 2
+" smarrt case有効化。 大文字が入力されるまで大文字小文字の区別を無視する
+let g:neocomplcache_enable_smart_case = 1
+" camle caseを有効化。大文字を区切りとしたワイルドカードのように振る舞う
+let g:neocomplcache_enable_camel_case_completion = 1
+" _(アンダーバー)区切りの補完を有効化
+let g:neocomplcache_enable_underbar_completion = 1
+" シンタックスをキャッシュするときの最小文字長を3に
+let g:neocomplcache_min_syntax_length = 3
+" neocomplcacheを自動的にロックするバッファ名のパターン
+let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
+" -入力による候補番号の表示
+let g:neocomplcache_enable_quick_match = 1
+" 補完候補の一番先頭を選択状態にする(AutoComplPopと似た動作)
+let g:neocomplcache_enable_auto_select = 0
+"ポップアップメニューで表示される候補の数。初期値は100
+let g:neocomplcache_max_list = 20
+
+" Define dictionary.
+let g:neocomplcache_dictionary_filetype_lists = {
+    \ 'default' : '',
+    \ 'c' : $HOME.'/.vim/dict/c.dict',
+    \ }
+
+" Define keyword.
+if !exists('g:neocomplcache_keyword_patterns')
+    let g:neocomplcache_keyword_patterns = {}
+endif
+let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
+
+" ユーザー定義スニペット保存ディレクトリ
+let g:neocomplcache_snippets_dir = '~/.vim/bundle/neosnippet/autoload/neosnippet/snippets,~/.vim/snippet'
+
+" C-nでneocomplcache補完
+inoremap <expr><C-n>  pumvisible() ? "\<C-n>" : "\<C-x>\<C-u>\<C-p>"
+" C-pでkeyword補完
+inoremap <expr><C-p> pumvisible() ? "\<C-p>" : "\<C-p>\<C-n>"
+" 補完候補が出ていたら確定、なければ改行
+inoremap <expr><CR>  pumvisible() ? neocomplcache#close_popup() : "<CR>"
+
+" FileType毎のOmni補完を設定
+autocmd FileType c          setlocal omnifunc=ccomplete#Complete
+
+" Enable heavy omni completion.
+if !exists('g:neocomplcache_omni_patterns')
+  let g:neocomplcache_omni_patterns = {}
+endif
+let g:neocomplcache_omni_patterns.c = '\%(\.\|->\)\h\w*'
+
+"インクルードパスの指定
+let g:neocomplcache_include_paths = {
+  \ 'c'    : '.,/usr/include',
+  \ }
+"インクルード文のパターンを指定
+let g:neocomplcache_include_patterns = {
+  \ 'c' : '^\s*#\s*include',
+  \ }

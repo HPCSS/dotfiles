@@ -1,0 +1,23 @@
+"-------------------------------------------------------------------------------
+" 編集関連 Edit
+"-------------------------------------------------------------------------------
+
+set expandtab "tabの代わりに空白文字の挿入
+
+" コンマの後に自動的にスペースを挿入
+inoremap , ,<Space>
+
+" 括弧補完
+inoremap { {}<LEFT>
+inoremap [ []<LEFT>
+inoremap ( ()<LEFT>
+inoremap " ""<LEFT>
+inoremap ' ''<LEFT>
+
+"backspace & delete
+inoremap <C-b>  <BS>
+
+" 保存時に行末の空白を除去する
+autocmd BufWritePre * :%s/\s\+$//ge
+" 保存時にtabをスペースに変換する
+autocmd BufWritePre * :%s/\t/ /ge

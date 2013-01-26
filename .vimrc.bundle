@@ -1,0 +1,81 @@
+"-------------------------------------------------------------------------------
+" NeoBundle
+"-------------------------------------------------------------------------------
+" vunlde.vimで管理してるpluginを読み込む
+
+filetype off
+if has('vim_starting')
+  set runtimepath+=~/.vim/bundle/neobundle.vim
+  call neobundle#rc(expand('~/.vim/bundle/'))
+endif
+" set rtp+=~/.vim/bundle/vundle/
+" call vundle#rc()
+
+let g:neobundle_default_git_protocol='http'
+
+" Edit {{{
+
+  "コメント
+  NeoBundle 'tomtom/tcomment_vim'
+
+  " YankRing.vim : ヤンクの履歴を管理し、順々に参照、出力できるようにする
+  NeoBundle 'YankRing.vim'
+
+  " surround.vim : テキストを括弧で囲む／削除する
+  NeoBundle 'tpope/vim-surround'
+
+" }}}
+
+" Completion {{{
+
+  " 補完 neocomplcache.vim : 究極のVim的補完環境
+  NeoBundle 'Shougo/neocomplcache'
+
+  " neocomplcacheのsinpet補完
+  NeoBundle 'Shougo/neosnippet.git'
+
+" }}}
+
+" Programming {{{
+  " quickrun.vim : 編集中のファイルを簡単に実行できるプラグイン
+  NeoBundle 'thinca/vim-quickrun'
+
+" }}}
+
+" Buffer {{{
+
+  " DumbBuf.vim : quickbufっぽくbufferを管理。 "<Leader>b<Space>でBufferList
+  " NeoBundle 'DumbBuf'
+
+  " minibufexpl.vim : タブエディタ風にバッファ管理ウィンドウを表示
+  NeoBundle 'minibufexpl.vim'
+
+  " NERDTree : ツリー型エクスプローラ
+  NeoBundle 'The-NERD-tree'
+
+" }}}
+
+" Unite {{{{
+
+  " unite.vim
+  NeoBundle 'Shougo/unite.vim'
+
+" }}}
+
+" Searching/Moving{{{
+
+  " vim-smartword : 単語移動がスマートな感じで
+  NeoBundle 'smartword'
+
+  " camelcasemotion : CamelCaseやsnake_case単位でのワード移動
+  NeoBundle 'camelcasemotion'
+
+" }}}
+
+" ColorSchema{{{{
+
+  NeoBundle 'YuuShigetani/colorschemes'
+
+" }}}
+
+filetype plugin indent on
