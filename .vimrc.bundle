@@ -24,6 +24,15 @@ let g:neobundle_default_git_protocol='http'
   " surround.vim : テキストを括弧で囲む／削除する
   NeoBundle 'tpope/vim-surround'
 
+  " Align : 高機能整形・桁揃えプラグイン
+  NeoBundle 'Align'
+
+  " フィルタリングと整形
+  NeoBundle 'godlygeek/tabular'
+
+  " undo履歴を追える (need python support)
+  NeoBundle 'Gundo'
+
 " }}}
 
 " Completion {{{
@@ -43,9 +52,6 @@ let g:neobundle_default_git_protocol='http'
 " }}}
 
 " Buffer {{{
-
-  " DumbBuf.vim : quickbufっぽくbufferを管理。 "<Leader>b<Space>でBufferList
-  " NeoBundle 'DumbBuf'
 
   " minibufexpl.vim : タブエディタ風にバッファ管理ウィンドウを表示
   NeoBundle 'minibufexpl.vim'
@@ -78,6 +84,16 @@ let g:neobundle_default_git_protocol='http'
 " ColorSchema{{{{
 
   NeoBundle 'YuuShigetani/colorschemes'
+
+" }}}
+
+" Utility {{{
+
+  " vimshell : vim内にshellを立ち上げる
+  NeoBundle 'Shougo/vimshell.git'
+
+  " ステータスラインをカッコよくする
+  NeoBundle 'Lokaltog/vim-powerline'
 
 " }}}
 
