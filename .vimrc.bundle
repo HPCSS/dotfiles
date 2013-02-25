@@ -53,9 +53,6 @@ let g:neobundle_default_git_protocol='http'
 
 " Buffer {{{
 
-  " minibufexpl.vim : タブエディタ風にバッファ管理ウィンドウを表示
-  NeoBundle 'minibufexpl.vim'
-
   " NERDTree : ツリー型エクスプローラ
   NeoBundle 'The-NERD-tree'
 
