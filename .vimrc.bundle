@@ -11,13 +11,29 @@ endif
 
 let g:neobundle_default_git_protocol='https'
 
+" Unite {{{{
+
+  " unite本体
+  NeoBundleLazy "Shougo/unite.vim", {
+        \ 'autoload' : {
+        \   'commands' : [
+        \     'Unite', 'UniteWithCurrentDir',
+        \     'UniteWithBufferDir', 'UniteBookmarkAdd' ],
+        \ }}
+
+" }}}
+
 " Edit {{{
 
   "コメント
-  NeoBundle 'tomtom/tcomment_vim'
+  NeoBundleLazy 'tomtom/tcomment_vim', {
+        \ 'autoload' : {
+        \   'commands' : ['TComment', 'TCommentAs', 'TCommentMaybeInline']
+        \ }}
 
   " -- でメソッドチェーン整形
-  NeoBundle 'c9s/cascading.vim'
+  NeoBundleLazy 'c9s/cascading.vim', {
+        \ 'autoload' : { 'commands' : 'Cascading', 'insert' : 1 }}
 
   " YankRing.vim : ヤンクの履歴を管理し、順々に参照、出力できるようにする
   NeoBundle 'YankRing.vim'
@@ -26,30 +42,44 @@ let g:neobundle_default_git_protocol='https'
   NeoBundle 'tpope/vim-surround'
 
   " Align : 高機能整形・桁揃えプラグイン
-  NeoBundle 'Align'
+  NeoBundleLazy 'Align', {
+        \ 'autoload' : { 'commands' : 'Align' }}
 
   " フィルタリングと整形
-  NeoBundle 'godlygeek/tabular'
+  NeoBundleLazy 'godlygeek/tabular', {
+        \ 'autoload' : { 'commands' : 'Tab' }}
 
   " undo履歴を追える (need python support)
-  NeoBundle 'Gundo'
+  NeoBundleLazy 'Gundo', {
+        \ 'autoload' : { 'commands' : 'GundoToggle' }}
 
 " }}}
 
 " Completion {{{
 
   " 補完 neocomplcache.vim : 究極のVim的補完環境
-  NeoBundle 'Shougo/neocomplcache'
+  NeoBundleLazy 'Shougo/neocomplcache', {
+        \ 'autoload' : { 'insert' : 1 }}
 
   " neocomplcacheのsinpet補完
-  NeoBundle 'Shougo/neosnippet.git'
+  NeoBundleLazy 'Shougo/neosnippet', {
+        \ 'autoload' : {
+        \   'commands' : ['NeoSnippetEdit'],
+        \   'filetypes' : 'snippet',
+        \   'insert' : 1,
+        \   'unite_sources' : ['snippet', 'neosnippet/user', 'neosnippet/runtime'],
+        \ }}
 
 " }}}
 
 " Programming {{{
 
   " quickrun.vim : 編集中のファイルを簡単に実行できるプラグイン
-  NeoBundle 'thinca/vim-quickrun'
+  NeoBundleLazy 'thinca/vim-quickrun', {
+        \ 'autoload' : {
+        \   'mappings' : [['nxo', '<Plug>(quickrun)']],
+        \   'commands' : 'QuickRun',
+        \ }}
 
 " }}}
 
@@ -60,26 +90,34 @@ let g:neobundle_default_git_protocol='https'
 
 " }}}
 
-" Unite {{{{
-
-  " unite.vim
-  NeoBundle 'Shougo/unite.vim'
-
-" }}}
-
 " Searching/Moving{{{
 
   " vim-smartword : 単語移動がスマートな感じで
-  NeoBundle 'smartword'
+  NeoBundleLazy 'smartword', {
+        \ 'autoload' : {
+        \   'mappings' : [
+        \     '<Plug>(smartword-w)', '<Plug>(smartword-b)',
+        \     '<Plug>(smartword-e)', '<Plug>(smartword-ge)']
+        \ }}
 
   " camelcasemotion : CamelCaseやsnake_case単位でのワード移動
-  NeoBundle 'camelcasemotion'
+  NeoBundleLazy 'camelcasemotion', {
+        \ 'autoload' : {
+        \   'mappings' : [
+        \     '<Plug>CamelCaseMotion_w', '<Plug>CamelCaseMotion_b',
+        \     '<Plug>CamelCaseMotion_e', '<Plug>CamelCaseMotion_iw',
+        \     '<Plug>CamelCaseMotion_ib', '<Plug>CamelCaseMotion_ie'],
+        \ }}
 
   " <Leader><Leader>w/fなどで、motion先をhilightする
   NeoBundle 'EasyMotion'
 
   " open-browser.vim : カーソルの下のURLを開くor単語を検索エンジンで検索
-  NeoBundle 'tyru/open-browser.vim'
+  NeoBundleLazy 'tyru/open-browser.vim', {
+        \ 'autoload' : {
+        \   'mappings' : ['<Plug>(open-browser-wwwsearch)', '<Plug>(openbrowser-open)'],
+        \   'commands' : ['OpenBrowserSearch'],
+        \ }}
 
 " }}}
 
@@ -92,7 +130,9 @@ let g:neobundle_default_git_protocol='https'
 " Utility {{{
 
   " vimshell : vim内にshellを立ち上げる
-  NeoBundle 'Shougo/vimshell.git'
+  NeoBundleLazy 'Shougo/vimshell', {
+        \   'autoload' : { 'commands' : [ 'VimShell' ] }
+        \}
 
   " vimproc : vimから非同期実行。vimshelleで必要
   NeoBundle 'Shougo/vimproc', {

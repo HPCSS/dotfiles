@@ -8,6 +8,13 @@
 source ~/dotfiles/.vimrc.neocomplcache
 
 "------------------------------------
+" tcomment_vim
+"------------------------------------
+let g:tcommentmaps = 0
+nnoremap <silent>gcc :TComment<CR>
+vnoremap <silent>gc :TComment<CR>
+
+"------------------------------------
 " YankRing.vim
 "------------------------------------
 " Yankの履歴参照
@@ -22,6 +29,11 @@ nmap ss <Plug>Yssurround
 let g:surround_{char2nr('e')} = "begin \r end"
 let g:surround_{char2nr('d')} = "do \r end"
 let g:surround_{char2nr("-")} = ":\r"
+
+"------------------------------------
+" gundo.Vim
+"------------------------------------
+nnoremap U :<C-u>GundoToggle<CR>
 
 "------------------------------------
 " smartword.vim
@@ -66,43 +78,49 @@ nnoremap <silent> [unite]m  :<C-u>Unite -auto-preview -buffer-name=mru file_mru<
 " 現在のバッファのカレントディレクトリからファイル一覧
 nnoremap <silent> [unite]d  :<C-u>UniteWithBufferDir -auto-preview -buffer-name=dir file<CR>
 
-autocmd FileType unite call s:unite_my_settings()
-function! s:unite_my_settings()"{{{
-  " Overwrite settings.
+let bundle = neobundle#get('unite.vim')
+function! bundle.hooks.on_source(bundle)
 
-  " ESCキーを2回押すと終了する
-  nmap <buffer> <ESC>      <Plug>(unite_exit)
-  nmap <buffer> <ESC><ESC> <Plug>(unite_exit)
-  imap <buffer> jj      <Plug>(unite_insert_leave)
-  nnoremap <silent><buffer> <C-k> :<C-u>call unite#mappings#do_action('preview')<CR>
-  imap <buffer> <C-w>     <Plug>(unite_delete_backward_path)
-  " Start insert.
-  let g:unite_enable_start_insert = 1
+  autocmd FileType unite call s:unite_my_settings()
+  function! s:unite_my_settings()"{{{
+    " Overwrite settings.
 
-  " ウィンドウを分割して開く
-  nnoremap <silent> <buffer> <expr> <C-l> unite#do_action('split')
-  inoremap <silent> <buffer> <expr> <C-l> unite#do_action('split')
+    " ESCキーを2回押すと終了する
+    nmap <buffer> <ESC>      <Plug>(unite_exit)
+    nmap <buffer> <ESC><ESC> <Plug>(unite_exit)
+    imap <buffer> jj      <Plug>(unite_insert_leave)
+    nnoremap <silent><buffer> <C-k> :<C-u>call unite#mappings#do_action('preview')<CR>
+    imap <buffer> <C-w>     <Plug>(unite_delete_backward_path)
+    " Start insert.
+    let g:unite_enable_start_insert = 1
 
-  " ウィンドウを縦に分割して開く
-  nnoremap <silent> <buffer> <expr> <C-v> unite#do_action('vsplit')
-  inoremap <silent> <buffer> <expr> <C-v> unite#do_action('vsplit')
-endfunction"}}}
+    " ウィンドウを分割して開く
+    nnoremap <silent> <buffer> <expr> <C-l> unite#do_action('split')
+    inoremap <silent> <buffer> <expr> <C-l> unite#do_action('split')
 
-let g:unite_split_rule = "rightbelow"
-let g:unite_enable_start_insert = 0
-let g:unite_source_file_mru_limit = 200
-let g:unite_enable_split_vertically = 1
-let g:unite_source_grep_max_candidates = 200
-let g:unite_source_grep_default_opts = "-HnEi"
-      \ . " --exclude='*.svn*'"
-      \ . " --exclude='*.log*'"
-      \ . " --exclude='*tmp*'"
-      \ . " --exclude-dir='tmp'"
-      \ . " --exclude-dir='log'"
-      \ . " --exclude-dir='vendor'"
-      \ . " --exclude-dir='CVS'"
-      \ . " --exclude-dir='.svn'"
-      \ . " --exclude-dir='.git'"
+    " ウィンドウを縦に分割して開く
+    nnoremap <silent> <buffer> <expr> <C-v> unite#do_action('vsplit')
+    inoremap <silent> <buffer> <expr> <C-v> unite#do_action('vsplit')
+  endfunction"}}}
+
+  let g:unite_split_rule = "rightbelow"
+  let g:unite_enable_start_insert = 0
+  let g:unite_source_file_mru_limit = 200
+  let g:unite_enable_split_vertically = 1
+  let g:unite_source_grep_max_candidates = 200
+  let g:unite_source_grep_default_opts = "-HnEi"
+        \ . " --exclude='*.svn*'"
+        \ . " --exclude='*.log*'"
+        \ . " --exclude='*tmp*'"
+        \ . " --exclude-dir='tmp'"
+        \ . " --exclude-dir='log'"
+        \ . " --exclude-dir='vendor'"
+        \ . " --exclude-dir='CVS'"
+        \ . " --exclude-dir='.svn'"
+        \ . " --exclude-dir='.git'"
+
+endfunction
+unlet bundle
 
 "------------------------------------
 " NERDTree.vim
@@ -142,52 +160,58 @@ vmap t :Tab /
 "------------------------------------
 " vimshell
 "------------------------------------
-let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~")'
-let g:vimshell_right_prompt = 'vimshell#vcs#info("(%s)-[%b]", "(%s)-[%b|%a]")'
-let g:vimshell_enable_smart_case = 1
+let bundle = neobundle#get('vimshell')
+function! bundle.hooks.on_source(bundle)
 
-if has('win32') || has('win64')
-  " Display user name on Windows.
-  let g:vimshell_prompt = $USERNAME."% "
-else
-  " Display user name on Linux.
-  let g:vimshell_prompt = $USER."% "
+  let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~")'
+  let g:vimshell_right_prompt = 'vimshell#vcs#info("(%s)-[%b]", "(%s)-[%b|%a]")'
+  let g:vimshell_enable_smart_case = 1
 
-  call vimshell#set_execute_file('bmp,jpg,png,gif', 'gexe eog')
-  call vimshell#set_execute_file('mp3,m4a,ogg', 'gexe amarok')
-  let g:vimshell_execute_file_list['zip'] = 'zipinfo'
-  call vimshell#set_execute_file('tgz,gz', 'gzcat')
-  call vimshell#set_execute_file('tbz,bz2', 'bzcat')
-endif
+  if has('win32') || has('win64')
+    " Display user name on Windows.
+    let g:vimshell_prompt = $USERNAME."% "
+  else
+    " Display user name on Linux.
+    let g:vimshell_prompt = $USER."% "
 
-function! g:my_chpwd(args, context)
-  call vimshell#execute('echo "chpwd"')
-endfunction
-function! g:my_emptycmd(cmdline, context)
-  call vimshell#execute('echo "emptycmd"')
-  return a:cmdline
-endfunction
-function! g:my_preprompt(args, context)
-  call vimshell#execute('echo "preprompt"')
-endfunction
-function! g:my_preexec(cmdline, context)
-  call vimshell#execute('echo "preexec"')
-
-  if a:cmdline =~# '^\s*diff\>'
-    call vimshell#set_syntax('diff')
+    call vimshell#set_execute_file('bmp,jpg,png,gif', 'gexe eog')
+    call vimshell#set_execute_file('mp3,m4a,ogg', 'gexe amarok')
+    let g:vimshell_execute_file_list['zip'] = 'zipinfo'
+    call vimshell#set_execute_file('tgz,gz', 'gzcat')
+    call vimshell#set_execute_file('tbz,bz2', 'bzcat')
   endif
-  return a:cmdline
-endfunction
 
-autocmd FileType vimshell
-\ call vimshell#altercmd#define('g', 'git')
-\| call vimshell#altercmd#define('i', 'iexe')
-\| call vimshell#altercmd#define('l', 'll')
-\| call vimshell#altercmd#define('ll', 'ls -la')
-\| call vimshell#hook#set('chpwd', ['g:my_chpwd'])
-\| call vimshell#hook#set('emptycmd', ['g:my_emptycmd'])
-\| call vimshell#hook#set('preprompt', ['g:my_preprompt'])
-\| call vimshell#hook#set('preexec', ['g:my_preexec'])
+  function! g:my_chpwd(args, context)
+    call vimshell#execute('echo "chpwd"')
+  endfunction
+  function! g:my_emptycmd(cmdline, context)
+    call vimshell#execute('echo "emptycmd"')
+    return a:cmdline
+  endfunction
+  function! g:my_preprompt(args, context)
+    call vimshell#execute('echo "preprompt"')
+  endfunction
+  function! g:my_preexec(cmdline, context)
+    call vimshell#execute('echo "preexec"')
+
+    if a:cmdline =~# '^\s*diff\>'
+      call vimshell#set_syntax('diff')
+    endif
+    return a:cmdline
+  endfunction
+
+  autocmd FileType vimshell
+        \ call vimshell#altercmd#define('g', 'git')
+        \| call vimshell#altercmd#define('i', 'iexe')
+        \| call vimshell#altercmd#define('l', 'll')
+        \| call vimshell#altercmd#define('ll', 'ls -la')
+        \| call vimshell#hook#set('chpwd', ['g:my_chpwd'])
+        \| call vimshell#hook#set('emptycmd', ['g:my_emptycmd'])
+        \| call vimshell#hook#set('preprompt', ['g:my_preprompt'])
+        \| call vimshell#hook#set('preexec', ['g:my_preexec'])
+
+endfunction
+unlet bundle
 
 command! Vs :VimShell -split
 
@@ -219,17 +243,21 @@ nnoremap <Leader>osw :<C-u>OpenBrowserSearch<Space><C-r><C-w><Enter>
 "------------------------------------
 nnoremap <silent><Leader>r :QuickRun<CR>
 
-let g:quickrun_config = {}
-" let g:quickrun_config._ = {'runner' : 'vimproc'}
-let g:quickrun_config.c = {
-      \   'type': 'c/gcc',
-      \   'command': 'gcc',
-      \   'exec': ['%c %o %s -o %s:p:r -lm', '%s:p:r %a'],
-      \   'tempfile': '%{tempname()}.c',
-      \   'hook/sweep/files': '%S:p:r',
-      \   'cmdopt': '-std=c99 -Wall',
-      \   'args': '%{input("argv> ")}',
-      \ }
+let bundle = neobundle#get('vim-quickrun')
+function! bundle.hooks.on_source(bundle)
+  let g:quickrun_config = {}
+  let g:quickrun_config._ = {'runner' : 'vimproc'}
+  let g:quickrun_config.c = {
+        \   'type': 'c/gcc',
+        \   'command': 'gcc',
+        \   'exec': ['%c %o %s -o %s:p:r -lm', '%s:p:r %a'],
+        \   'tempfile': '%{tempname()}.c',
+        \   'hook/sweep/files': '%S:p:r',
+        \   'cmdopt': '-std=c99 -Wall',
+        \   'args': '%{input("argv> ")}',
+        \ }
+endfunction
+unlet bundle
 
 " ------------------------------------
 " cascading.vim
