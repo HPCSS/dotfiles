@@ -8,15 +8,16 @@ if has('vim_starting')
   set runtimepath+=~/.vim/bundle/neobundle.vim
   call neobundle#rc(expand('~/.vim/bundle/'))
 endif
-" set rtp+=~/.vim/bundle/vundle/
-" call vundle#rc()
 
-let g:neobundle_default_git_protocol='http'
+let g:neobundle_default_git_protocol='https'
 
 " Edit {{{
 
   "コメント
   NeoBundle 'tomtom/tcomment_vim'
+
+  " -- でメソッドチェーン整形
+  NeoBundle 'c9s/cascading.vim'
 
   " YankRing.vim : ヤンクの履歴を管理し、順々に参照、出力できるようにする
   NeoBundle 'YankRing.vim'
@@ -46,6 +47,7 @@ let g:neobundle_default_git_protocol='http'
 " }}}
 
 " Programming {{{
+
   " quickrun.vim : 編集中のファイルを簡単に実行できるプラグイン
   NeoBundle 'thinca/vim-quickrun'
 
@@ -76,6 +78,9 @@ let g:neobundle_default_git_protocol='http'
   " <Leader><Leader>w/fなどで、motion先をhilightする
   NeoBundle 'EasyMotion'
 
+  " open-browser.vim : カーソルの下のURLを開くor単語を検索エンジンで検索
+  NeoBundle 'tyru/open-browser.vim'
+
 " }}}
 
 " ColorSchema{{{{
@@ -88,6 +93,14 @@ let g:neobundle_default_git_protocol='http'
 
   " vimshell : vim内にshellを立ち上げる
   NeoBundle 'Shougo/vimshell.git'
+
+  " vimproc : vimから非同期実行。vimshelleで必要
+  NeoBundle 'Shougo/vimproc', {
+        \ 'build' : {
+        \   'mac'    : 'make -f make_mac.mak',
+        \   'unix'   : 'make -f make_unix.mak',
+        \   'cygwin' : 'make -f make_cygwin.mak',
+        \ }}
 
   " ステータスラインをカッコよくする
   NeoBundle 'Lokaltog/vim-powerline'

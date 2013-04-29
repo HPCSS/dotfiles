@@ -13,24 +13,7 @@ done
 
 mkdir -p $HOME/.vim/bundle
 cd $HOME/.vim/bundle
-git clone http://github.com/Shougo/neobundle.vim.git
-git clone http://github.com/Shougo/vimproc.git
-
-cd vimproc
-ENVS=(unix mac cygwin other)
-echo plz select ur env
-select env in ${ENVS[*]}
-do
-    if [ -z $env ]; then
-        continue
-    elif [ $env = "other" ]; then
-        echo plz make vimproc by urself
-        break
-    else
-        make -f make_$env.mak
-        break
-    fi
-done
+git clone https://github.com/Shougo/neobundle.vim.git
 
 cd ${ORIGIN}
-vim -c "NeoBundleInstall" -c q
+vim -c "NeoBundleInstall" -c qa
