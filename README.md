@@ -19,6 +19,6 @@ $ ~/dotfiles/setup.sh
 
 ```
 $ chmod +x ~/dotfiles/uninstall.sh
-$ . ~/dotfiles/uninstall.sh
+$ ~/dotfiles/uninstall.sh
 ```
 

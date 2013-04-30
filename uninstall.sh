@@ -11,10 +11,6 @@ do
     fi
 done
 
-if [ $(pwd) = $HOME/dotfiles ]; then
-    cd $HOME
-fi
-
 DOT_FILES=( .vimrc .vim/bundle dotfiles )
 
 for file in ${DOT_FILES[@]}
